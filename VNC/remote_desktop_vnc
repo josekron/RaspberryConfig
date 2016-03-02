@@ -1,13 +1,15 @@
-Remote desktop (VNC)
-====================
+==========================
+|| Remote desktop (VNC) ||
+==========================
+
+Install Tighvncserver
+=====================
 
 sudo apt-get install tightvncserver
 
-If returns "unable to locate packa
-- Install server VNC:
-ge tightvncserver", try:
+If returns "unable to locate package tightvncserver", try:
 
--sudo nano /etc/apt/sources.list and uncomment the line:
+sudo nano /etc/apt/sources.list and uncomment the line:
 deb-src http://archive.raspbian.org/raspbian/ jessie main contrib non-free rpi
 
 sudo apt-get update
@@ -18,14 +20,16 @@ If not found, try before install tightvncserver:
 
 sudo apt-get install xtightvncviewer
 
-- In console:
+Configure and initializate
+==========================
 
 vncserver :1
 tightvncserver -> give you the port (590x)
 
-Now, for automatic initialization of VNC:
+Introduce your password and choose "NO" in "View Only".
 
-- In console:
+Automatic initialization of VNC
+===============================
 
 sudo nano /etc/init.d/vncboot
 
@@ -48,10 +52,10 @@ exit 1
 esac
 exit 0
 
-Permissions and dependencies:
+Save the file and give it the permissions and dependencies:
 
 sudo chmod 755 /etc/init.d/vncboot
 sudo update-rc.d vncboot defaults
 sudo reboot
 
-- About dinamics IPs, use a dns service, for example no-ip.com
+For dinamics IPs, use a dns service, for example no-ip.com
