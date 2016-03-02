@@ -1,0 +1,45 @@
+First steps on Raspberry Pi2 and Raspbian
+=========================================
+
+- Resolution Full-HD:
+
+1- Console -> sudo raspi-config.
+2- Select Advance Options/A1 Overscan/disabled -> reboot.
+
+Other way: console -> sudo nano /boot/config.txt and change line "disable_overscan=1"
+
+- Update Raspbian:
+
+sudo apt-get update
+sudo apt-get upgrade
+
+- Configure local static IP (for Wifi):
+
+sudo nano /etc/network/interfaces
+
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+address 192.168.0.104 #It depends on your local network
+netmask 255.255.255.0 #It depends on your local network
+gateway 192.168.0.2 #It depends on your local network
+
+- Create users:
+
+sudo adduser john
+sudo visudo:
+
+pi    ALL=(ALL) ALL
+john  ALL=(ALL) ALL
+
+Remove user -> sudo deluser john
+
+- Remove programs installed (forever):
+
+sudo apt-get remove --purge nameprogram*
+sudo apt-get clean
+sudo apt-get autoremove
+
+- Check memory on the SD card:
+
+df -h
