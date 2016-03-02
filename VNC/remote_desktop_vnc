@@ -1,0 +1,57 @@
+Remote desktop (VNC)
+====================
+
+sudo apt-get install tightvncserver
+
+If returns "unable to locate packa
+- Install server VNC:
+ge tightvncserver", try:
+
+-sudo nano /etc/apt/sources.list and uncomment the line:
+deb-src http://archive.raspbian.org/raspbian/ jessie main contrib non-free rpi
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo reboot
+
+If not found, try before install tightvncserver:
+
+sudo apt-get install xtightvncviewer
+
+- In console:
+
+vncserver :1
+tightvncserver -> give you the port (590x)
+
+Now, for automatic initialization of VNC:
+
+- In console:
+
+sudo nano /etc/init.d/vncboot
+
+#!/bin/sh
+VNCUSER='pi'
+eval cd ~$VNCUSER
+case "$1" in
+start)
+su $VNCUSER -c '/usr/bin/tightvncserver :1'
+echo "Starting TightVNC server for $VNCUSER "
+;;
+stop)
+pkill Xtightvnc
+echo "Tightvncserver stopped"
+;;
+*)
+echo "Usage: /etc/init.d/tightvncserver {start|stop}"
+exit 1
+;;
+esac
+exit 0
+
+Permissions and dependencies:
+
+sudo chmod 755 /etc/init.d/vncboot
+sudo update-rc.d vncboot defaults
+sudo reboot
+
+- About dinamics IPs, use a dns service, for example no-ip.com
